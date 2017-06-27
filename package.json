@@ -1,0 +1,23 @@
+{
+  "name": "xmycv",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.3",
+    "handlebars": "^4.0.10",
+    "hbs": "^4.0.1",
+    "materialize-css": "^0.99.0",
+    "morgan": "^1.8.2",
+    "node-sass-middleware": "^0.11.0",
+    "serve-favicon": "^2.4.3"
+  }
+}
