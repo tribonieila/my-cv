@@ -8,6 +8,8 @@ const app = express();
 
 const i18n = require('./i18n/western-europe.json')
 
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'hbs')
@@ -45,8 +47,8 @@ app.use(function(err, req, res, next){
     error: {}
   })
 })
-app.listen(3000, function() {
-  console.log('Listening on port 3000');
+app.listen(server_port, server_ip_address, function() {
+  console.log('Listening on ' + server_ip_address + ', port ' + server_port);
 });
 
 module.exports = app
