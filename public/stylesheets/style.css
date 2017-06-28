@@ -413,6 +413,13 @@ body {
 .featured-img {
   padding-right: 0px !important;
 }
+
+.social-img {
+  padding-right: 0px !important;
+  max-width: 100%;
+  height: auto;
+}
+
 .caption {
   padding-left: 0px !important;
 }
