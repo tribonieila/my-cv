@@ -1,19 +1,27 @@
-const express = require('express');
-const path = require('path')
-const favicon = require('serve-favicon')
-const logger = require('morgan')
-const cookieParser = require('cookie-parser')
-const bodyParser = require('body-parser')
-const app = express();
+var express = require('express');
+var path = require('path')
+var favicon = require('serve-favicon')
+var logger = require('morgan')
+var cookieParser = require('cookie-parser')
+var bodyParser = require('body-parser')
+var exphbs = require('express-handlebars')
 
-const i18n = require('./i18n/western-europe.json')
+var app = express();
+
+var i18n = require('./i18n/western-europe.json')
 
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
-// view engine setup
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'hbs')
 
+
+// view engine setup
+var hbs = exphbs.create({
+  defaultLayout: 'layout',
+  partialsDir: 'views/partials'
+})
+
+app.engine('handlebars', hbs.engine )
+app.set('view engine', 'handlebars')
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'))
 app.use(bodyParser.json())
@@ -30,7 +38,21 @@ app.get('/', function(req, res) {
   res.render('index', {title: 'HILARIO B. VILLAR'})
 })
 
+app.get('/coverletter', function(req, res) {
+  res.render('coverletter', { title: 'HILARIO B. VILLAR | Cover Letter'})
+})
 
+app.get('/expertise', function(req, res) {
+  res.render('expertise', { title: 'HILARIO B. VILLAR | Expertise'})
+})
+
+app.get('/projects', function(req, res) {
+  res.render('projects', { title: 'HILARIO B. VILLAR | Projects'})
+})
+
+app.get('/contact', function(req, res) {
+  res.render('contact', { title: 'HILARIO B. VILLAR | Contact'})
+})
 // catch 404 and forwared to error handler
 app.use(function(req, res, next) {
   var err = new Error(i18n['English']['404'])
@@ -47,6 +69,7 @@ app.use(function(err, req, res, next){
     error: {}
   })
 })
+
 app.listen(server_port, server_ip_address, function() {
   console.log('Listening on ' + server_ip_address + ', port ' + server_port);
 });
