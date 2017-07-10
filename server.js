@@ -5,7 +5,8 @@ var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var exphbs = require('express-handlebars')
-
+var nodemailer = require('nodemailer')
+var router = express.Router()
 var app = express();
 
 var i18n = require('./i18n/western-europe.json')
@@ -53,6 +54,76 @@ app.get('/projects', function(req, res) {
 app.get('/contact', function(req, res) {
   res.render('contact', { title: 'HILARIO B. VILLAR | Contact'})
 })
+
+app.post('/contact', function(req, res) {
+
+  var name = req.body.sender_name;
+  var email = req.body.sender_email;
+  var message = req.body.sender_message;
+  //res.send(name + ' ' + email + ' ' + message);
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+      //service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true, // secure:true for port 465, secure:false for port 587
+      auth: {
+          user: 'tribo.ni.eila@gmail.com',
+          pass: '-*1979*-'
+      }
+  });
+
+  // setup email data with unicode symbols
+  let mailOptions = {
+      from: req.body.sender_name + ' &lt;' + req.body.sender_email + '&gt;', // sender address
+      to: 'tribo.ni.eila@gmail.com', // list of receivers
+      subject: 'Inquiry', // Subject line
+      text: req.body.sender_message // plain text body
+      //html: '<b>Hello world ?</b>' // html body
+  };
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+          return console.log(error);
+      }
+      console.log('Message %s sent: %s', info.messageId, info.response);
+
+  });
+  transporter.close();
+})
+/*
+app.post('/contact', function(req, res) {
+  var mailOpts, smtpTrans;
+  //Setup Nodemailer transport, I chose gmail. Create an application-specific password to avoid problems.
+  smtpTrans = nodemailer.createTransport({
+    host: 'smtp.example.com',
+    port: 465,
+    secure: true, // secure:true for port 465, secure:false for port 587
+    auth: {
+        user: 'tribo.ni.eila@gmail.com',
+        pass: '-*1979*-'
+    }
+  });
+  //Mail options
+  mailOpts = {
+      from: req.body.name + ' &lt;' + req.body.email + '&gt;', //grab form data from the request body object
+      to: 'tribo.ni.eila@gmail.com',
+      subject: 'Website contact form',
+      text: req.body.message
+  };
+  smtpTrans.sendMail(mailOpts, function (error, response) {
+      //Email not sent
+      if (error) {
+          res.render('contact', { title: 'Raging Flame Laboratory - Contact', msg: 'Error occured, message not sent.', err: true, page: 'contact' })
+      }
+      //Yay!! Email sent
+      else {
+          res.render('contact', { title: 'Raging Flame Laboratory - Contact', msg: 'Message sent! Thank you.', err: false, page: 'contact' })
+      }
+  });
+});
+*/
 // catch 404 and forwared to error handler
 app.use(function(req, res, next) {
   var err = new Error(i18n['English']['404'])
