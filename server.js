@@ -77,8 +77,8 @@ app.post('/contact', function(req, res) {
       //port: 465,
       //secure: true, // secure:true for port 465, secure:false for port 587
       auth: {
-          user: 'tribo.ni.eila@gmail.com',
-          pass: '-*1979*-'
+          user: '',
+          pass: ''
       }
   });
 
