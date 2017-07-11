@@ -55,18 +55,27 @@ app.get('/contact', function(req, res) {
   res.render('contact', { title: 'HILARIO B. VILLAR | Contact'})
 })
 
-app.post('/contact', function(req, res) {
+app.get('/thankyou', function(req, res) {
+  res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
+})
 
-  var name = req.body.sender_name;
-  var email = req.body.sender_email;
-  var message = req.body.sender_message;
+app.post('/contact', function(req, res) {
+  var data = req.body;
+  var htmlContent = '<p>Name: ' + req.body.sender_name +  '</p>' +
+                    '<p>Email: ' + req.body.sender_email +  '</p>' +
+                    '<p>Message: ' + req.body.sender_message +  '</p>';
+
+  //res.render('thankyou', { title: 'HILARIO B. VILLAR | Thank You'})
+  //var name = req.body.sender_name;
+  //var email = req.body.sender_email;
+  //var message = req.body.sender_message;
   //res.send(name + ' ' + email + ' ' + message);
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-      //service: 'gmail',
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true, // secure:true for port 465, secure:false for port 587
+      service: 'gmail',
+      //host: 'smtp.gmail.com',
+      //port: 465,
+      //secure: true, // secure:true for port 465, secure:false for port 587
       auth: {
           user: 'tribo.ni.eila@gmail.com',
           pass: '-*1979*-'
@@ -75,12 +84,18 @@ app.post('/contact', function(req, res) {
 
   // setup email data with unicode symbols
   let mailOptions = {
+      //from: "Sender Name <email@gmail.com>",
+      //to: "Receiver Name <receiver@email.com>", // receiver
+      //subject: "Emailing with nodemailer", // subject
+      //html: "here your data goes" // body
       from: req.body.sender_name + ' &lt;' + req.body.sender_email + '&gt;', // sender address
       to: 'tribo.ni.eila@gmail.com', // list of receivers
       subject: 'Inquiry', // Subject line
-      text: req.body.sender_message // plain text body
-      //html: '<b>Hello world ?</b>' // html body
+      //text: req.body.sender_message // plain text body
+      html: htmlContent
+
   };
+    //res.json(data);
 
   // send mail with defined transport object
   transporter.sendMail(mailOptions, (error, info) => {
@@ -91,39 +106,9 @@ app.post('/contact', function(req, res) {
 
   });
   transporter.close();
-})
-/*
-app.post('/contact', function(req, res) {
-  var mailOpts, smtpTrans;
-  //Setup Nodemailer transport, I chose gmail. Create an application-specific password to avoid problems.
-  smtpTrans = nodemailer.createTransport({
-    host: 'smtp.example.com',
-    port: 465,
-    secure: true, // secure:true for port 465, secure:false for port 587
-    auth: {
-        user: 'tribo.ni.eila@gmail.com',
-        pass: '-*1979*-'
-    }
-  });
-  //Mail options
-  mailOpts = {
-      from: req.body.name + ' &lt;' + req.body.email + '&gt;', //grab form data from the request body object
-      to: 'tribo.ni.eila@gmail.com',
-      subject: 'Website contact form',
-      text: req.body.message
-  };
-  smtpTrans.sendMail(mailOpts, function (error, response) {
-      //Email not sent
-      if (error) {
-          res.render('contact', { title: 'Raging Flame Laboratory - Contact', msg: 'Error occured, message not sent.', err: true, page: 'contact' })
-      }
-      //Yay!! Email sent
-      else {
-          res.render('contact', { title: 'Raging Flame Laboratory - Contact', msg: 'Message sent! Thank you.', err: false, page: 'contact' })
-      }
-  });
+  res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
 });
-*/
+
 // catch 404 and forwared to error handler
 app.use(function(req, res, next) {
   var err = new Error(i18n['English']['404'])
