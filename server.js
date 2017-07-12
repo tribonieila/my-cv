@@ -19,7 +19,7 @@ var hbs = exphbs.create({
   defaultLayout: 'layout',
   partialsDir: 'views/partials'
 })
-
+ 
 app.engine('handlebars', hbs.engine )
 app.set('view engine', 'handlebars')
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
