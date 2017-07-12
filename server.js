@@ -65,11 +65,6 @@ app.post('/contact', function(req, res) {
                     '<p>Email: ' + req.body.sender_email +  '</p>' +
                     '<p>Message: ' + req.body.sender_message +  '</p>';
 
-  //res.render('thankyou', { title: 'HILARIO B. VILLAR | Thank You'})
-  //var name = req.body.sender_name;
-  //var email = req.body.sender_email;
-  //var message = req.body.sender_message;
-  //res.send(name + ' ' + email + ' ' + message);
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -84,18 +79,12 @@ app.post('/contact', function(req, res) {
 
   // setup email data with unicode symbols
   let mailOptions = {
-      //from: "Sender Name <email@gmail.com>",
-      //to: "Receiver Name <receiver@email.com>", // receiver
-      //subject: "Emailing with nodemailer", // subject
-      //html: "here your data goes" // body
       from: req.body.sender_name + ' &lt;' + req.body.sender_email + '&gt;', // sender address
       to: 'tribo.ni.eila@gmail.com', // list of receivers
       subject: 'Inquiry', // Subject line
-      //text: req.body.sender_message // plain text body
       html: htmlContent
 
   };
-    //res.json(data);
 
   // send mail with defined transport object
   transporter.sendMail(mailOptions, (error, info) => {
