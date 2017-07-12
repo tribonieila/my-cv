@@ -74,7 +74,7 @@ app.post('/contact', function(req, res) {
           user: 'tribo.ni.eila@gmail.com',
           pass: '-*1979*-'
       }
-  });
+  })
 
   // setup email data with unicode symbols
   var mailOptions = {
@@ -83,7 +83,7 @@ app.post('/contact', function(req, res) {
       subject: 'Inquiry', // Subject line
       html: htmlContent
 
-  };
+  }
 
   res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
 })
