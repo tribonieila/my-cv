@@ -83,7 +83,7 @@ app.post('/contact', function(req, res) {
   }
 
   // send mail with defined transport object
-  transporter.sendMail(mailOptions, (error, info) => {
+  transporter.sendMail(mailOptions, functions (error, info)  {
       if (error) {
           return console.log(error);
       }
