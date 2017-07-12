@@ -58,10 +58,6 @@ app.get('/thankyou', function(req, res) {
   res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
 })
 
-app.post('/contact', function(req, res) {
-
-  res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
-})
 
 // catch 404 and forwared to error handler
 app.use(function(req, res, next) {
