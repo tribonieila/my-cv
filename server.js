@@ -19,7 +19,7 @@ var hbs = exphbs.create({
   defaultLayout: 'layout',
   partialsDir: 'views/partials'
 })
- 
+
 app.engine('handlebars', hbs.engine )
 app.set('view engine', 'handlebars')
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -59,7 +59,7 @@ app.get('/thankyou', function(req, res) {
 })
 
 app.post('/contact', function(req, res) {
-  var data = req.body;
+
   var htmlContent = '<p>Name: ' + req.body.sender_name +  '</p>' +
                     '<p>Email: ' + req.body.sender_email +  '</p>' +
                     '<p>Message: ' + req.body.sender_message +  '</p>';
@@ -85,15 +85,6 @@ app.post('/contact', function(req, res) {
 
   };
 
-  // send mail with defined transport object
-  transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-          return console.log(error);
-      }
-      console.log('Message %s sent: %s', info.messageId, info.response);
-
-  });
-  transporter.close();
   res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
 })
 
