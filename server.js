@@ -93,7 +93,7 @@ app.post('/contact', function(req, res) {
       console.log('Message %s sent: %s', info.messageId, info.response);
 
   });
-  transporter.close();
+  //transporter.close();
   res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
 })
 
