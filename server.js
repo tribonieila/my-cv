@@ -5,7 +5,6 @@ var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var exphbs = require('express-handlebars')
-var nodemailer = require('nodemailer')
 var app = express();
 
 var i18n = require('./i18n/western-europe.json')
