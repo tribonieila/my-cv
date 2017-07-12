@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var exphbs = require('express-handlebars')
 var nodemailer = require('nodemailer')
-var router = express.Router()
 var app = express();
 
 var i18n = require('./i18n/western-europe.json')
@@ -66,19 +65,19 @@ app.post('/contact', function(req, res) {
                     '<p>Message: ' + req.body.sender_message +  '</p>';
 
   // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
+  var transporter = nodemailer.createTransport({
       service: 'gmail',
-      //host: 'smtp.gmail.com',
-      //port: 465,
-      //secure: true, // secure:true for port 465, secure:false for port 587
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true, // secure:true for port 465, secure:false for port 587
       auth: {
-          user: '',
-          pass: ''
+          user: 'tribo.ni.eila@gmail.com',
+          pass: '-*1979*-'
       }
   });
 
   // setup email data with unicode symbols
-  let mailOptions = {
+  var mailOptions = {
       from: req.body.sender_name + ' &lt;' + req.body.sender_email + '&gt;', // sender address
       to: 'tribo.ni.eila@gmail.com', // list of receivers
       subject: 'Inquiry', // Subject line
