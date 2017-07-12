@@ -83,13 +83,7 @@ app.post('/contact', function(req, res) {
   }
 
   // send mail with defined transport object
-  transporter.sendMail(mailOptions, functions (error, info)  {
-      if (error) {
-          return console.log(error);
-      }
-      console.log('Message %s sent: %s', info.messageId, info.response);
 
-  })
   transporter.close();
   res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
 })
