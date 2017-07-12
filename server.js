@@ -95,7 +95,7 @@ app.post('/contact', function(req, res) {
   });
   transporter.close();
   res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
-});
+})
 
 // catch 404 and forwared to error handler
 app.use(function(req, res, next) {
