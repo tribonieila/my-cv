@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var exphbs = require('express-handlebars')
 var nodemailer = require('nodemailer')
+
 var app = express();
 
 var i18n = require('./i18n/western-europe.json')
@@ -54,12 +55,8 @@ app.get('/contact', function(req, res) {
   res.render('contact', { title: 'HILARIO B. VILLAR | Contact'})
 })
 
-app.get('/thankyou', function(req, res) {
-  res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
-})
-
 app.post('/contact', function(req, res) {
-  var data = req.body;
+
   var htmlContent = '<p>Name: ' + req.body.sender_name +  '</p>' +
                     '<p>Email: ' + req.body.sender_email +  '</p>' +
                     '<p>Message: ' + req.body.sender_message +  '</p>';
@@ -74,7 +71,7 @@ app.post('/contact', function(req, res) {
           user: 'tribo.ni.eila@gmail.com',
           pass: '-*1979*-'
       }
-  });
+  })
 
   // setup email data with unicode symbols
   var mailOptions = {
@@ -83,11 +80,21 @@ app.post('/contact', function(req, res) {
       subject: 'Inquiry', // Subject line
       html: htmlContent
 
-  };
+  }
 
-
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, function(error, info) {
+      if (error) {
+          console.log(error);
+      } else {
+          console.log('Message %s sent: %s', info.messageId, info.response);
+      }
+      transporter.close();
+  });
   res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
 })
+
+
 
 // catch 404 and forwared to error handler
 app.use(function(req, res, next) {
