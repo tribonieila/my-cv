@@ -83,6 +83,7 @@ app.post('/contact', function(req, res) {
   }
 
   // send mail with defined transport object
+<<<<<<< HEAD
   transporter.sendMail(mailOptions, function(error, info) {
       if (error) {
           console.log(error);
@@ -94,6 +95,16 @@ app.post('/contact', function(req, res) {
   res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
 })
 
+=======
+
+  transporter.close();
+  res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
+})
+
+app.get('/thankyou', function(req, res) {
+  res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
+})
+>>>>>>> 4c7537af58dee639c0d34bed264d7d851eabc815
 
 
 // catch 404 and forwared to error handler
