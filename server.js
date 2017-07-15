@@ -67,8 +67,8 @@ app.post('/contact', function(req, res) {
       port: 465,
       secure: true, // secure:true for port 465, secure:false for port 587
       auth: {
-          user: 'tribo.ni.eila@gmail.com',
-          pass: '-*1979*-'
+          type: 'OAuth2',
+          user: 'tribo.ni.eila@gmail.com'
       }
   })
 
@@ -81,6 +81,16 @@ app.post('/contact', function(req, res) {
 
   }
 
+  transporter.set('oauth2_provision_cb', (user, renew, callback)=>{
+      let accessToken = userTokens[user];
+      if(!accessToken){
+          return callback(new Error('Unknown user'));
+      }else{
+          return callback(null, accessToken);
+          transporter.close()
+      }
+  })
+  /*
   // send mail with defined transport object
   transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
@@ -89,6 +99,7 @@ app.post('/contact', function(req, res) {
       console.log('Message %s sent: %s', info.messageId, info.response);
       transporter.close();
   })
+  */
   res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
 })
 
