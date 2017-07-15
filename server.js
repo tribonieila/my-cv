@@ -63,7 +63,6 @@ app.post('/contact', function(req, res) {
 
   // create reusable transporter object using the default SMTP transport
   var transporter = nodemailer.createTransport({
-      service: 'gmail',
       host: 'smtp.gmail.com',
       port: 465,
       secure: true, // secure:true for port 465, secure:false for port 587
@@ -83,12 +82,13 @@ app.post('/contact', function(req, res) {
   }
 
   // send mail with defined transport object
-
-  transporter.close();
-  res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
-})
-
-app.get('/thankyou', function(req, res) {
+  transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+          return console.log(error);
+      }
+      console.log('Message %s sent: %s', info.messageId, info.response);
+      transporter.close();
+  })
   res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
 })
 
