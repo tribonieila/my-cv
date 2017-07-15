@@ -56,7 +56,7 @@ app.get('/contact', function(req, res) {
 })
 
 app.post('/contact', function(req, res) {
-
+  var data = req.body;
   var htmlContent = '<p>Name: ' + req.body.sender_name +  '</p>' +
                     '<p>Email: ' + req.body.sender_email +  '</p>' +
                     '<p>Message: ' + req.body.sender_message +  '</p>';
@@ -84,19 +84,6 @@ app.post('/contact', function(req, res) {
 
   // send mail with defined transport object
 
-  transporter.sendMail(mailOptions, function(error, info) {
-      if (error) {
-          console.log(error);
-      } else {
-          console.log('Message %s sent: %s', info.messageId, info.response);
-      }
-      transporter.close();
-  });
-  res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
-})
-
-
-
   transporter.close();
   res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
 })
@@ -104,7 +91,6 @@ app.post('/contact', function(req, res) {
 app.get('/thankyou', function(req, res) {
   res.render('thankyou', { title: 'HILARIO B. VILLAR | Contact'})
 })
-
 
 
 // catch 404 and forwared to error handler
