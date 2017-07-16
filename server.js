@@ -68,33 +68,34 @@ app.post('/contact', function(req, res) {
       secure: true, // secure:true for port 465, secure:false for port 587
       auth: {
           type: 'OAuth2',
+          user: 'tribo.ni.eila@gmail.com',
           clientId: '470076890250-i3vrld81uu05ptkq0dt1bn4fas6ih5np.apps.googleusercontent.com',
           clientSecret: 'DRIfM0815gxo6FH5GgOsNs4c'
       }
   })
-
-  transporter.sendMail({
-      from: 'sender@example.com',
-      to: 'recipient@example.com',
-      subject: 'Message',
-      text: 'I hope this message gets through!',
-      auth: {
-          user: 'user@example.com',
-          refreshToken: '1/XXxXxsss-xxxXXXXXxXxx0XXXxxXXx0x00xxx',
-          accessToken: 'ya29.Xx_XX0xxxxx-xX0X0XxXXxXxXXXxX0x',
-          expires: 1484314697598
-      }
-  })
-
-  transporter.set('oauth2_provision_cb', (user, renew, callback)=>{
+  transporter.set('oauth2_provision_cb', (user, renew, callback) => {
       let accessToken = userTokens[user];
       if(!accessToken){
           return callback(new Error('Unknown user'));
       }else{
           return callback(null, accessToken);
-          transporter.close()
       }
   })
+
+  transporter.sendMail({
+      from: 'tribo.ni.eila@gmail.com',
+      to: 'tribo.ni.eila@gmail.com',
+      subject: 'Message',
+      text: 'I hope this message gets through!',
+      auth: {
+          user: 'tribo.ni.eila@gmail.com',
+          refreshToken: '1/51ZPPT-URGu3f0ZFhAUHlR48Rrf_dGf5aE1DPsDv-1M',
+          accessToken: 'ya29.GluJBDbOLOh-eGSDBff9NBnleljawffhhv9aY3KfmrZ3QjaOstCvW6zXboNiguQe0_Ubsc2BYO8QHIDmTESgL5OUjiKkjST9_no6seagxFnroh_c69w3vU__t5Hq',
+          expires: 3600
+      }
+  })
+
+
 
 
 
