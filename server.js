@@ -68,18 +68,23 @@ app.post('/contact', function(req, res) {
       secure: true, // secure:true for port 465, secure:false for port 587
       auth: {
           type: 'OAuth2',
-          user: 'tribo.ni.eila@gmail.com'
+          clientId: '470076890250-i3vrld81uu05ptkq0dt1bn4fas6ih5np.apps.googleusercontent.com',
+          clientSecret: 'DRIfM0815gxo6FH5GgOsNs4c'
       }
   })
 
-  // setup email data with unicode symbols
-  var mailOptions = {
-      from: req.body.sender_name + ' &lt;' + req.body.sender_email + '&gt;', // sender address
-      to: 'tribo.ni.eila@gmail.com', // list of receivers
-      subject: 'Inquiry', // Subject line
-      html: htmlContent
-
-  }
+  transporter.sendMail({
+      from: 'sender@example.com',
+      to: 'recipient@example.com',
+      subject: 'Message',
+      text: 'I hope this message gets through!',
+      auth: {
+          user: 'user@example.com',
+          refreshToken: '1/XXxXxsss-xxxXXXXXxXxx0XXXxxXXx0x00xxx',
+          accessToken: 'ya29.Xx_XX0xxxxx-xX0X0XxXXxXxXXXxX0x',
+          expires: 1484314697598
+      }
+  })
 
   transporter.set('oauth2_provision_cb', (user, renew, callback)=>{
       let accessToken = userTokens[user];
@@ -90,7 +95,19 @@ app.post('/contact', function(req, res) {
           transporter.close()
       }
   })
+
+
+
   /*
+  // setup email data with unicode symbols
+  var mailOptions = {
+      from: req.body.sender_name + ' &lt;' + req.body.sender_email + '&gt;', // sender address
+      to: 'tribo.ni.eila@gmail.com', // list of receivers
+      subject: 'Inquiry', // Subject line
+      html: htmlContent
+
+  }
+
   // send mail with defined transport object
   transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
