@@ -11,8 +11,11 @@ var app = express();
 
 var i18n = require('./i18n/western-europe.json')
 
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+//app.set('port', (process.env.PORT || 8080));
+//var server_port = process.env.OPENSHIFT_NODEJS_PORT || 3000
+//var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 3000
+//var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 
 
 // view engine setup
@@ -20,6 +23,7 @@ var hbs = exphbs.create({
   defaultLayout: 'layout',
   partialsDir: 'views/partials'
 })
+
 
 app.engine('handlebars', hbs.engine )
 app.set('view engine', 'handlebars')
@@ -198,7 +202,7 @@ app.use(function(err, req, res, next){
 })
 
 app.listen(server_port, server_ip_address, function() {
-  console.log('Listening on ' + server_ip_address + ', port ' + server_port);
+  console.log('Listening on ' + ', port ' + server_port);
 });
 
 module.exports = app
