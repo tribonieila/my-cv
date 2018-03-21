@@ -14,7 +14,7 @@ var i18n = require('./i18n/western-europe.json')
 //app.set('port', (process.env.PORT || 8080));
 //var server_port = process.env.OPENSHIFT_NODEJS_PORT || 3000
 //var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 3000
+var server_port = process.env.PORT || 5000
 //var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 
 
@@ -201,7 +201,7 @@ app.use(function(err, req, res, next){
   })
 })
 
-app.listen(server_port, server_ip_address, function() {
+app.listen(server_port, function() {
   console.log('Listening on ' + ', port ' + server_port);
 });
 
