@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var exphbs = require('express-handlebars')
 var nodemailer = require('nodemailer')
-
+var mg = require('nodemailer-mailgun-transport')
 var app = express();
 
 var i18n = require('./i18n/western-europe.json')
@@ -60,9 +60,39 @@ app.post('/contact', function(req, res) {
   var htmlContent = '<p>Name: ' + req.body.sender_name +  '</p>' +
                     '<p>Email: ' + req.body.sender_email +  '</p>' +
                     '<p>Message: ' + req.body.sender_message +  '</p>';
+                    // This is your API key that you retrieve from www.mailgun.com/cp (free up to 10K monthly emails)
+  var auth = {
+    auth: {
+      api_key: 'key-47e9c86b252fc3f94eab7ebdedca5ab1',
+      domain: 'sandbox59c58f6b8a08430b8dba19f64766bf17.mailgun.org'
+    }
+  }
 
-  // create reusable transporter object using the default SMTP transport
+  var nodemailerMailgun = nodemailer.createTransport(mg(auth));
+
+  nodemailerMailgun.sendMail({
+    from: 'myemail@example.com',
+    to: 'tribo.ni.eila@gmail.com', // An array if you have multiple recipients.
+    cc:'second@domain.com',
+    bcc:'secretagent@company.gov',
+    subject: 'Hey you, awesome!',
+    'h:Reply-To': 'reply2this@company.com',
+    //You can use "html:" to send HTML email content. It's magic!
+    html: '<b>Wow Big powerful letters</b>',
+    //You can use "text:" to send plain-text content. It's oldschool!
+    text: 'Mailgun rocks, pow pow!'
+  }, function (err, info) {
+    if (err) {
+      console.log('Error: ' + err);
+    }
+    else {
+      console.log('Response: ' + info);
+    }
+  });
+// create reusable transporter object using the default SMTP transport
+  /*
   var transporter = nodemailer.createTransport({
+      service: 'Gmail',
       host: 'smtp.gmail.com',
       port: 465,
       secure: true, // secure:true for port 465, secure:false for port 587
@@ -70,11 +100,39 @@ app.post('/contact', function(req, res) {
           type: 'OAuth2',
           user: 'tribo.ni.eila@gmail.com',
           clientId: '470076890250-i3vrld81uu05ptkq0dt1bn4fas6ih5np.apps.googleusercontent.com',
-          clientSecret: 'DRIfM0815gxo6FH5GgOsNs4c'
+          clientSecret: 'DRIfM0815gxo6FH5GgOsNs4c',
+          accessToken: 'ya29.GluNBBnhXtIYOlzw5D4RIH4v4Vkq3n4P6_UZur-YoWw34MNCXucZknIsCDK0R6ToVBk0Z13-8cfwZlAMsvKL45VZ9iAxJKVfw3Th1YXacBlf71rCCsESm-URmRVs',
+          expires: 3600,
+          refreshToken: '1/0vloH7GYAmbG300iTsiAfbTlVkVz9GsTMaAxo_q3p4k'
       }
   })
+  */
+/*
+"access_token": "ya29.GluNBBnhXtIYOlzw5D4RIH4v4Vkq3n4P6_UZur-YoWw34MNCXucZknIsCDK0R6ToVBk0Z13-8cfwZlAMsvKL45VZ9iAxJKVfw3Th1YXacBlf71rCCsESm-URmRVs",
+"token_type": "Bearer",
+"expires_in": 3600,
+"refresh_token": "1/0vloH7GYAmbG300iTsiAfbTlVkVz9GsTMaAxo_q3p4k"
+
+ */
+/*
+  var mailOptions = {
+    from: "tribo.ni.eila@gmail.com",
+    to: "tribo.ni.eila@gmail.com",
+    subject: "Hello",
+    generateTextFromHTML: true,
+    html: htmlContent
+  }
+  transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+          return console.log(error);
+      }
+      console.log('Message %s sent: %s', info.messageId, info.response);
+      transporter.close();
+  })
+  */
+  /*
   transporter.set('oauth2_provision_cb', (user, renew, callback) => {
-      let accessToken = userTokens[user];
+      let accessToken = 'tribo.ni.eila@gmail.com';
       if(!accessToken){
           return callback(new Error('Unknown user'));
       }else{
@@ -94,7 +152,7 @@ app.post('/contact', function(req, res) {
           expires: 3600
       }
   })
-
+  */
 
 
 
